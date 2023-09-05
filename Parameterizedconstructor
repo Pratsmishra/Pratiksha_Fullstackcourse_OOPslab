@@ -1,0 +1,51 @@
+class Employee {
+    private String firstName;
+    private String lastName;
+    private String department;
+
+    public Employee(String firstName, String lastName) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+    }
+
+    public void setDepartment(String department) {
+        this.department = department;
+    }
+
+    public String getFirstName() {
+        return firstName;
+    }
+
+    public String getLastName() {
+        return lastName;
+    }
+
+    public String getDepartment() {
+        return department;
+    }
+}
+
+class CredentialService {
+    // ... (rest of the CredentialService code remains the same)
+}
+
+public class Main {
+    public static void main(String[] args) {
+        // Create an instance of CredentialService
+        CredentialService credentialService = new CredentialService();
+
+        // Create new Employee objects using parameterized constructor
+        Employee employee1 = new Employee("John", "Doe");
+        employee1.setDepartment("Technical");
+
+        Employee employee2 = new Employee("Jane", "Smith");
+        employee2.setDepartment("Admin");
+
+        // Display generated credentials
+        System.out.println("Employee 1 Credentials:");
+        credentialService.displayCredentials(employee1);
+
+        System.out.println("\nEmployee 2 Credentials:");
+        credentialService.displayCredentials(employee2);
+    }
+}
