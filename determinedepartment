@@ -1,0 +1,103 @@
+import java.util.Random;
+import java.util.Scanner;
+
+class Employee {
+    private String firstName;
+    private String lastName;
+    private String department;
+
+    public Employee(String firstName, String lastName) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+    }
+
+    public void setDepartment(String department) {
+        this.department = department;
+    }
+
+    public String getFirstName() {
+        return firstName;
+    }
+
+    public String getLastName() {
+        return lastName;
+    }
+
+    public String getDepartment() {
+        return department;
+    }
+}
+
+class CredentialService {
+    private static final String COMPANY = "company.com";
+    private static final Random random = new Random();
+
+    public String generateEmail(Employee employee) {
+        String email = employee.getFirstName().toLowerCase() +
+                       employee.getLastName().toLowerCase() +
+                       "@" + employee.getDepartment().toLowerCase() +
+                       "." + COMPANY;
+        return email;
+    }
+
+    public String generateRandomPassword() {
+        String characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*";
+        StringBuilder password = new StringBuilder();
+
+        for (int i = 0; i < 10; i++) {
+            int index = random.nextInt(characters.length());
+            password.append(characters.charAt(index));
+        }
+
+        return password.toString();
+    }
+
+    public void displayCredentials(Employee employee) {
+        String email = generateEmail(employee);
+        String password = generateRandomPassword();
+
+        System.out.println("Employee Name: " + employee.getFirstName() + " " + employee.getLastName());
+        System.out.println("Department: " + employee.getDepartment());
+        System.out.println("Email Address: " + email);
+        System.out.println("Password: " + password);
+    }
+}
+
+public class Main {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        
+        // Create an instance of CredentialService
+        CredentialService credentialService = new CredentialService();
+
+        // Collect information about new hires
+        System.out.print("Enter the number of new hires: ");
+        int numNewHires = scanner.nextInt();
+        scanner.nextLine(); // Consume the newline character
+        
+        Employee[] newHires = new Employee[numNewHires];
+        
+        for (int i = 0; i < numNewHires; i++) {
+            System.out.print("Enter the first name for new hire " + (i + 1) + ": ");
+            String firstName = scanner.nextLine();
+            
+            System.out.print("Enter the last name for new hire " + (i + 1) + ": ");
+            String lastName = scanner.nextLine();
+            
+            System.out.print("Enter the department for new hire " + (i + 1) + " (Technical, Admin, HR, Legal): ");
+            String department = scanner.nextLine();
+            
+            Employee employee = new Employee(firstName, lastName);
+            employee.setDepartment(department);
+            newHires[i] = employee;
+        }
+
+        // Generate and display credentials for new hires
+        for (Employee employee : newHires) {
+            System.out.println("\nCredentials for " + employee.getFirstName() + " " + employee.getLastName() + ":");
+            credentialService.displayCredentials(employee);
+        }
+
+        scanner.close();
+    }
+}
