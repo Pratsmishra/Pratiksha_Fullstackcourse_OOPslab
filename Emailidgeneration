@@ -1,0 +1,80 @@
+import java.util.Random;
+
+class Employee {
+    private String firstName;
+    private String lastName;
+    private String department;
+
+    public Employee(String firstName, String lastName, String department) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.department = department;
+    }
+
+    public String getFirstName() {
+        return firstName;
+    }
+
+    public String getLastName() {
+        return lastName;
+    }
+
+    public String getDepartment() {
+        return department;
+    }
+}
+
+class CredentialService {
+    private static final String COMPANY = "company.com";
+    private static final Random random = new Random();
+
+    public String generateEmail(Employee employee) {
+        String email = employee.getFirstName().toLowerCase() +
+                       employee.getLastName().toLowerCase() +
+                       "@" + employee.getDepartment().toLowerCase() +
+                       "." + COMPANY;
+        return email;
+    }
+
+    public String generateRandomPassword() {
+        String characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*";
+        StringBuilder password = new StringBuilder();
+
+        for (int i = 0; i < 10; i++) {
+            int index = random.nextInt(characters.length());
+            password.append(characters.charAt(index));
+        }
+
+        return password.toString();
+    }
+
+    public void displayCredentials(Employee employee) {
+        String email = generateEmail(employee);
+        String password = generateRandomPassword();
+
+        System.out.println("Employee Name: " + employee.getFirstName() + " " + employee.getLastName());
+        System.out.println("Department: " + employee.getDepartment());
+        System.out.println("Email Address: " + email);
+        System.out.println("Password: " + password);
+    }
+}
+
+public class Main {
+    public static void main(String[] args) {
+        // Create an instance of CredentialService
+        CredentialService credentialService = new CredentialService();
+
+        // Create new Employee objects
+        Employee employee1 = new Employee("John", "Doe", "Technical");
+        Employee employee2 = new Employee("Jane", "Smith", "Admin");
+
+        // Display generated credentials
+        System.out.println("Employee 1 Credentials:");
+        credentialService.displayCredentials(employee1);
+
+        System.out.println("\nEmployee 2 Credentials:");
+        credentialService.displayCredentials(employee2);
+    }
+
+}
+
